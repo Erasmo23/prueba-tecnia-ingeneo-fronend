@@ -1,0 +1,29 @@
+<div id="app">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <label class="navbar-brand">Ingeneo</label>
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a routerLink="/dashboard" class="nav-link">Home </a>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link" routerLink="/dashboard/productos">Produtos</a>
+      </li>
+      <li class="nav-item" >
+        <a  class="nav-link" routerLink="/dashboard/addProducto">Agregar Productos</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" >{{ username }}</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">Cerrar Sesión</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container container-fluid">
+    <router-outlet />
+  </div>
+</div>

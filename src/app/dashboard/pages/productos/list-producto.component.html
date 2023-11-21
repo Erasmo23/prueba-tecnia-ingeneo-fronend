@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-12">
+      <p>Productos</p>
+
+  <button routerLink="/dashboard/addProducto" type="button" class="btn btn-success">Nuevo Producto</button>
+
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nombre </th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Peso</th>
+          <th scope="col">Borrar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of listaProductos">
+          <th>{{producto.productoId}}</th>
+          <th>{{producto.nombre}}</th>
+          <td>{{producto.descripcion}}</td>
+          <td>{{producto.peso}}</td>
+          <td>
+              <button (click)="delete(producto.productoId)"  type="button" class="btn btn-danger">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
