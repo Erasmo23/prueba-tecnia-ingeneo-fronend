@@ -27,9 +27,12 @@ export class ListProductoComponent implements OnInit {
   getData(): void {
     this.service.getListProductos().subscribe(
       (response: ListResponse<Producto>) => {
-        this.listaProductos = response._embedded.data;
-        this.pageable = response.pageable;
-        console.log(this.listaProductos);
+        if (response._embedded){
+          this.listaProductos = response._embedded.data;
+          this.pageable = response.pageable;
+        }else{
+          this.listaProductos = [];
+        }
       },
       (errorResponse) => {
 
@@ -37,7 +40,6 @@ export class ListProductoComponent implements OnInit {
           let mensajeErrorSweet : string = "<p>";
           const errors: Errors = errorResponse.error;
           errors.errors.forEach(element => {
-              console.log(element.description);
               mensajeErrorSweet += `${element.description} <br>`;
             });
             mensajeErrorSweet += "</p>";

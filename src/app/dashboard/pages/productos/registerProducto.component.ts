@@ -17,6 +17,8 @@ export class RegisterProductoComponent {
   private service = inject(ProductoService);
   private router = inject(Router);
 
+  public peticionSaveProgress :boolean = false;
+
   public myForm: FormGroup = this.formBuilder.group ({
     nombre: ['',[Validators.required, Validators.maxLength(100), Validators.minLength(3)]],
     descripcion: ['',[Validators.required,Validators.maxLength(100)]],
@@ -25,29 +27,35 @@ export class RegisterProductoComponent {
   });
 
   registro():void {
-    const productoNew : ProductoRequest = this.myForm.value;
-    this.service.registro(productoNew)
-      .subscribe (
-        {
-          next: () => {
-            Swal.fire({html:"Producto Agregado Existosamente!!!",icon:"success",confirmButtonText: 'Aceptar',confirmButtonColor: '#0d1b5c'}).then((result) => {
-							this.router.navigateByUrl("/dashboard/productos");
-						});
-          },
-          error : (listError : Errors) => {
 
-            let mensajeErrorSweet : string = "<p>";
+    if (!this.peticionSaveProgress){
+      this.peticionSaveProgress = true;
+      const productoNew : ProductoRequest = this.myForm.value;
+      this.service.registro(productoNew)
+        .subscribe (
+          {
+            next: () => {
+              Swal.fire({html:"Producto Agregado Existosamente!!!",icon:"success",confirmButtonText: 'Aceptar',confirmButtonColor: '#0d1b5c'}).then((result) => {
+                this.router.navigateByUrl("/dashboard/productos");
+              });
+            },
+            error : (listError : Errors) => {
 
-            listError.errors.forEach(element => {
-              console.log(element.description);
-              mensajeErrorSweet += `${element.description} <br>`;
-            });
-            mensajeErrorSweet += "</p>";
-            Swal.fire({html:mensajeErrorSweet, icon: 'error',confirmButtonText: 'Aceptar',confirmButtonColor: '#0d1b5c'});
+              this.peticionSaveProgress = false;
+
+              let mensajeErrorSweet : string = "<p>";
+
+              listError.errors.forEach(element => {
+
+                mensajeErrorSweet += `${element.description} <br>`;
+              });
+              mensajeErrorSweet += "</p>";
+              Swal.fire({html:mensajeErrorSweet, icon: 'error',confirmButtonText: 'Aceptar',confirmButtonColor: '#0d1b5c'});
+            }
+
           }
-
-        }
-      );
+        );
+    }
   }
 
 }

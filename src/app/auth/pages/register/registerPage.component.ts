@@ -41,7 +41,6 @@ export class RegisterPageComponent {
             let mensajeErrorSweet : string = "<p>";
 
             listError.errors.forEach(element => {
-              console.log(element.description);
               mensajeErrorSweet += `${element.description} <br>`;
             });
             mensajeErrorSweet += "</p>";
